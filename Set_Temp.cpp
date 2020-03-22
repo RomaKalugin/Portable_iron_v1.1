@@ -10,7 +10,7 @@ static uint16_t i_prev = 0;
 const float a = 0.0000007;
 const float b = -0.001;
 const float c = 1.04;
-const float d = 24.602;
+const float d = -24.602;
 
 int Get_Request_Temp(){
   return request_temper;

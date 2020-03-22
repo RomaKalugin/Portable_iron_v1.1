@@ -1,5 +1,4 @@
 #include "SETUP_PIN.h"
-#include "Timer.h"
 #include "Arduino.h"
 
 static const uint8_t INH = 3;

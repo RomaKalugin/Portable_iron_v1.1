@@ -1,7 +1,6 @@
 #include "LCD_print.h"
 #include "Read_Temper.h"
 #include "Set_Temp.h"
-#include "Timer.h"
 #include "Switch_Menu.h"
 #include "Arduino.h"
 #include <Wire.h>
@@ -393,12 +392,12 @@ void testdrawchar(void) {
 }*/
 
 /*Function: Starting OLED display and print version of portable iron*/
-void Print_Version_Iron(){
+void Print_Version_Iron(int set_rotation){
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3C for 128x32
   Serial.println(F("SSD1306 allocation failed"));
   for(;;); // Don't proceed, loop forever
   }
-  display.setRotation(0);
+  display.setRotation(set_rotation); //Set rotation iron
   display.clearDisplay();
   display.setTextSize(1); // Draw 2X-scale text
   display.setTextColor(SSD1306_WHITE);
@@ -601,7 +600,7 @@ void testdrawbitmap(void) {
 
 /*Function: Blinking "press" image*/
 void Standby_LCD() {  
-  current_time = GetTimer();
+  current_time = millis();
   if (current_time - previous_time >= interval_blinking){
     previous_time = current_time;
     if (state_standby == 0){

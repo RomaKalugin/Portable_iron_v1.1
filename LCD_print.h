@@ -1,7 +1,7 @@
 #ifndef _LCD_print_H_
 #define _LCD_print_H_
 
-void Print_Version_Iron();
+void Print_Version_Iron(int set_rotation);
 void Print_Temp();
 void Standby_LCD();
 void Print_Request_Temp(int print_val);

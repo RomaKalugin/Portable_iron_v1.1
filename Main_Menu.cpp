@@ -1,7 +1,6 @@
 #include "Main_Menu.h"
 #include "Switch_Menu.h"
 #include "Setup_Pin.h"
-#include "Timer.h"
 #include "PID.h"
 #include "LCD_Print.h"
 #include "Arduino.h"

@@ -11,8 +11,6 @@ void Pin_PWM(int state_PWM);
 void Pin_INH(bool state_INH);
 void Read_Btn_Left();
 void Read_Btn_Right();
-void Read_Btn();
-void Check_Btn();
 void Pin_Buzz(bool state_buzz);
 
 #endif
