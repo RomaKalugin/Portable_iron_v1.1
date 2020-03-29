@@ -24,7 +24,7 @@ uint16_t temperature_ntc;
 
 static uint16_t temperat_K;
 
-const uint8_t ADC0 = A3;
+const uint8_t ADC0 = A0;
 static uint32_t val_ADC0 = 0;
 
 static float temp;
@@ -38,15 +38,16 @@ double Get_Temp(){
 }
 
 void Read_Temperature_Termocouple(){
-  for(int i = 0; i <=10; i++){
-  for(uint8_t i = 0; i < 20; i++){
+  for(int i = 0; i < 5; i++){
+  for(uint8_t i = 0; i < 10; i++){
   val_ADC0 += analogRead(ADC0);
   }
-  temperat_K = (val_ADC0 / 20);
+  temperat_K = (val_ADC0 / 10);
+//  Serial.println(temperat_K);
   val_ADC0 = 0;
   temp += a * (pow(temperat_K,3)) + b * (pow(temperat_K,2)) + c * temperat_K + d;
   }
-  temp = temp / 10;
+  temp = temp / 5;
 }
 
 int Change_Reading_Temper(int temp_request){

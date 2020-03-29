@@ -9,7 +9,7 @@
 static uint8_t state = 0;
 
 /* variable for temper_set*/
-static uint16_t temper = 300;           // 300 degree(default)
+static uint16_t temper = 200;           // 300 degree(default)
 static const uint16_t temper_max = 620; // 450 degree 
 static const uint16_t temper_min = 79;  // 100 degree
 static const uint16_t temp_step = 1;    // 
@@ -23,8 +23,8 @@ static const uint16_t temper_preset_min = 79;
 
 /* variables for switch_main_menu */
 static unsigned long time_up = 0;
-static uint16_t interval_preset_temp = 200000;
-static uint16_t interval_standby_mode = 300000;
+static uint32_t interval_preset_temp = 200000;
+static uint32_t interval_standby_mode = 300000;
 /**********************************/
 
 /* variables for update_pid */
@@ -132,7 +132,7 @@ void Switch_Heating_Set_Temp(){
     Set_Temp(temper);
     timer_current = 0;
   }
-  if(state == 2 && GetBtn_Right() == HIGH || GetBtn_Left() == HIGH){
+  if(state == 2 && (GetBtn_Right() == HIGH || GetBtn_Left() == HIGH)){
     Set_Temp(temper);
     Request_Temper();
     Print_Request_Temp(Get_Request_Temp());
@@ -161,7 +161,7 @@ void State_Heating(){
   }
   if(timer - previous_time_set_request_temp > interval_set_request_temp){
   previous_time_set_request_temp = timer;
-  if(state == 1 && GetBtn_Right() == HIGH || GetBtn_Left() == HIGH){
+  if(state == 1 && (GetBtn_Right() == HIGH || GetBtn_Left() == HIGH)){
     state = 2; Pin_INH(0);
   }
   }

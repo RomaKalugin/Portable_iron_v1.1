@@ -3,6 +3,6 @@
 
 void Read_Input_Volt();
 void Check_Input_Voltage(double check_volt);
-int GetInputVolt();
+double GetInputVolt();
 
 #endif 
