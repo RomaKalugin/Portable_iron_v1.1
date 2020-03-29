@@ -4,7 +4,7 @@
 const float a = 0.0000007;
 const float b = -0.001;
 const float c = 1.04;
-const float d = 6.602;
+const float d = 4.602;
 static uint16_t i = 0;
 static uint16_t i_prev = 0;
 

@@ -6,9 +6,9 @@
 #include "Main_Menu.h"
 #include "Switch_Menu.h"
 
-static float Kp = 0.40;
-static float Ki = 0.35;
-static float Kd = 0.45;
+static float Kp = 16.85;
+static float Ki = 0.0095;
+static float Kd = 9.85;
 
 static float deriv;
 
@@ -32,7 +32,7 @@ void Update_PID(){
   Read_Temperature_Termocouple();
   }
   error = GetRequestTemp() - GetTemperature();
-  Serial.println(error);
+  Serial.println(GetTemperature());
   err_sum += error;
   deriv = (error - last_error) / (timer - timer_up);
   output = (Kp * error) + (Ki * err_sum) + (Kd * deriv);
