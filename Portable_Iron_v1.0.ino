@@ -16,7 +16,7 @@ void setup() {
   Print_Version_Iron(0); //0 - 180* degrees(righthand), 2 - 0* degree(lefthand);
   delay(1000);
   Pin_Setup();
-  Setup_PWM_Frequency(1); //0 - 15kHz(default), 1 - 1.9kHz(default), 2 - 60Hz
+  Setup_PWM_Frequency(0); //0 - 15kHz(default), 1 - 1.9kHz(default), 2 - 60Hz
   Buzzing(); 
   Pin_INH(0);  //0 - off, 1 - on
   Pin_PWM(0);  //0 - off(0%), 1023 - on(100%)

@@ -32,7 +32,7 @@ void Update_PID(){
   Read_Temperature_Termocouple();
   }
   error = GetRequestTemp() - GetTemperature();
-  Serial.println(GetTemperature());
+ // Serial.println(GetTemperature());
   err_sum += error;
   deriv = (error - last_error) / (timer - timer_up);
   output = (Kp * error) + (Ki * err_sum) + (Kd * deriv);
