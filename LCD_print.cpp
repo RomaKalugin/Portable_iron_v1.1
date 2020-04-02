@@ -557,6 +557,19 @@ void Print_Heat(){
 }
 /*****************************************************************/
 
+/*****************Function: Warning voltage***********************/
+void Print_min_volt(float voltage){
+  display.clearDisplay();
+  display.setCursor(10, 10);
+  display.setTextSize(1); // Draw 2X-scale text
+  display.cp437(true);
+  display.setTextColor(SSD1306_WHITE);
+  display.print(F("Voltage low"));
+  display.print(voltage, 1);
+  display.print(F(" v"));
+}
+/*****************************************************************/
+
 /*
 void testscrolltext(void) {
   display.clearDisplay();

@@ -15,4 +15,6 @@ void Print_Heat();
 void Print_Min(int min_val);
 void Print_Max(int max_val);
 
+void Print_min_volt(float voltage);
+
 #endif

@@ -15,7 +15,7 @@ void Read_Input_Volt(){
 }
 
 void Check_Input_Voltage(double check_volt){
-  if(check_volt < 10.0){/*Print_min_volt();*/}
+  if(check_volt < 10.0){/*Print_min_volt(GetInputVolt());*/}
   else if(check_volt > 10.0 ){}
 }
 
