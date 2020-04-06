@@ -38,7 +38,7 @@ void Setup_PWM_Frequency(int freq_type){
   TCCR1A = _BV(COM1A1) | _BV(COM1B1)  /* non-inverting PWM */
         | _BV(WGM11);                   /* mode 14: fast PWM, TOP=ICR1 */
   TCCR1B = _BV(WGM13) | _BV(WGM12)
-        | _BV(CS12);                    /* prescaling  1.9kHz*/
+        | _BV(CS12);                    /* prescaling  60Hz*/
   OCR1A = 0;
   ICR1 = 0x04ff;
   break;
