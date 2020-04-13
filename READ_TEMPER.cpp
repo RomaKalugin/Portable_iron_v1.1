@@ -4,7 +4,7 @@
 const float a = 0.0000007;
 const float b = -0.001;
 const float c = 1.04;
-const float d = 4.602;
+const float d = 24.602;
 static uint16_t i = 0;
 static uint16_t i_prev = 0;
 
@@ -38,7 +38,7 @@ double Get_Temp(){
 }
 
 void Read_Temperature_Termocouple(){
-  for(int i = 0; i < 5; i++){
+  for(uint8_t i = 0; i < 5; i++){
   for(uint8_t i = 0; i < 10; i++){
   val_ADC0 += analogRead(ADC0);
   }
@@ -48,6 +48,8 @@ void Read_Temperature_Termocouple(){
   temp += a * (pow(temperat_K,3)) + b * (pow(temperat_K,2)) + c * temperat_K + d;
   }
   temp = temp / 5;
+
+  temperat_K = (int)temp;
 }
 
 int Change_Reading_Temper(int temp_request){

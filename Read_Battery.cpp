@@ -11,7 +11,6 @@ void Read_Input_Volt(){
     }
     input_voltage = input_voltage / 10;
     input_voltage = input_voltage * (24 / 1023); 
-    //Serial.println(input_voltage);
 }
 
 void Check_Input_Voltage(double check_volt){

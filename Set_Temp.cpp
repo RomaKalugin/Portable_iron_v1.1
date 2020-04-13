@@ -4,13 +4,14 @@
 
 static double temp;
 static uint16_t temper_set;  // temperature in LSB 359 = 300 degree Celsius
+static uint8_t step_temp = 5;
 static uint16_t request_temper;
 static uint16_t i = 0;
 static uint16_t i_prev = 0;
 const float a = 0.0000007;
 const float b = -0.001;
 const float c = 1.04;
-const float d = 4.602;
+const float d = 24.602;
 
 int Get_Request_Temp(){
   return request_temper;
@@ -20,7 +21,7 @@ int Get_Temper_Set(){
 }
 
 void Set_Temp(int val_request){
-  temp =a * (pow(val_request, 0.11)) + b * (pow(val_request, 0.33)) + c * val_request + d;
+  temp =a * (pow(val_request, 0.1111)) + b * (pow(val_request, 0.3333)) + c * val_request + d;
   temper_set = (int)temp;
 }
 
@@ -49,14 +50,7 @@ int Change_Temper(int temp_request){
         i = 800;
      }
      i_prev = i;
-     i = i + 5 ;    
+     i = i + step_temp;    
   }
   i = 0;
 }
-
-
-/*
- * int i = 5;
- *   while(i--)
- *   if(A[i])
-*/
