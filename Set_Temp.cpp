@@ -29,7 +29,7 @@ void Request_Temper(){
   request_temper = Change_Temper(Get_Temper_Set());
 }
 
-int Read_Request_Temp(){
+/*int Read_Request_Temp(){
   Read_Btn();
   if (GetBtn_Left() == 1){
     temper_set--;
@@ -39,7 +39,7 @@ int Read_Request_Temp(){
   }
   else ;
   return temper_set;
-}
+}*/
 
 int Change_Temper(int temp_request){
   while (i < 800)

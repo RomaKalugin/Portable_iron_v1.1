@@ -3,23 +3,16 @@
 
 static const uint8_t INH = 3;
 static const uint8_t PWM_OUT = 9;
-static const uint8_t LEFT_BTN = 4;
-static const uint8_t RIGHT_BTN = 7;
+//static const uint8_t LEFT_BTN = 4;
+static const uint8_t BTN_pin = A7;
 static const uint8_t BUZZ = 5;
 static unsigned long current_time;
 static unsigned long previous_time = 0;
-static uint8_t interval_read_button = 10;
+static uint8_t interval_read_button = 20;
 
-static boolean Left_Btn;
-static boolean Right_Btn;
+static uint8_t i = 0;
 
-bool GetBtn_Left(){
-  return Left_Btn;
-}
-
-bool GetBtn_Right(){
-  return Right_Btn;
-}
+static uint16_t Btn_voltage = 0;
 
 void Setup_PWM_Frequency(int freq_type){
   switch(freq_type){
@@ -66,8 +59,8 @@ void Setup_PWM_Frequency(int freq_type){
 void Pin_Setup(){
   pinMode(INH, OUTPUT);
   pinMode(BUZZ, OUTPUT);
-  pinMode(LEFT_BTN, INPUT);
-  pinMode(RIGHT_BTN, INPUT);
+  //pinMode(LEFT_BTN, INPUT);
+  //pinMode(RIGHT_BTN, INPUT);
 }
 
 void Pin_PWM(int state_PWM){
@@ -83,11 +76,21 @@ void Pin_INH(bool state_INH){
 }
 
 void Read_Btn_Left(){
-  Left_Btn = digitalRead(LEFT_BTN);
+  Btn_voltage = 0;
+  for(i = 0; i < 5; i++){
+  Btn_voltage += analogRead(BTN_pin);
+  delayMicroseconds(500);
+  }
+  Btn_voltage = Btn_voltage / i;
+  Btn_voltage = ((Btn_voltage * 4.82) / 1024) * 1035;
+}
+
+int Get_Btn_val(){
+  return Btn_voltage;
 }
 
 void Read_Btn_Right(){
-  Right_Btn = digitalRead(RIGHT_BTN);
+  //Right_Btn = analogRead(BTN_pin);
 }
 
 void Read_Btn(){
@@ -95,18 +98,14 @@ void Read_Btn(){
   if (current_time - previous_time >= interval_read_button){
   previous_time = current_time;
   Read_Btn_Left();
-  Read_Btn_Right();
+  //Read_Btn_Right();
 }
-}
-
-void Check_Btn(){
-  
 }
 
 void Pin_Buzz(bool state_buzz){
   switch(state_buzz){
     case 0: analogWrite(BUZZ, 0); break;
-    case 1: analogWrite(BUZZ, 10); break;
+    case 1: analogWrite(BUZZ, 100); break;
     default: break;
   }
 }

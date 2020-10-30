@@ -1,8 +1,6 @@
 #ifndef _SETUP_PIN_H_
 #define _SETUP_PIN_H_
 
-bool GetBtn_Left();
-bool GetBtn_Right();
 int GetTimer_Right_Btn();
 int GetTimer_Left_Btn();
 void Pin_Setup();
@@ -13,5 +11,7 @@ void Read_Btn_Left();
 void Read_Btn_Right();
 void Read_Btn();
 void Pin_Buzz(bool state_buzz);
+
+int Get_Btn_val();
 
 #endif

@@ -17,4 +17,8 @@ void Print_Max(int max_val);
 
 void Print_min_volt(float voltage);
 
+
+void Print_Buzz();
+void Print_BTN_value(int max_val);
+
 #endif

@@ -3,7 +3,7 @@
 #include "Arduino.h"
 
 static unsigned long timing;
-static const uint8_t interval_Buzz = 10;
+static const uint8_t interval_Buzz = 100;
 
 void Buzzing(){
     timing = millis();

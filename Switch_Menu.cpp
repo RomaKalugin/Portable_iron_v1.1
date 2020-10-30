@@ -70,7 +70,7 @@ static unsigned long timer = 0;
 static unsigned long prev_time = 0;
 */
 
-void Switch_Main_Menu(){
+/*void Switch_Main_Menu(){
   if(GetBtn_Right() == HIGH && GetBtn_Left() == LOW){
     time_up++;
   }
@@ -81,9 +81,9 @@ void Switch_Main_Menu(){
     else if(interval_standby_mode > time_up && time_up > interval_preset_temp){state_menu = 3;}
     time_up = 0;
   }
-}
+}*/
 
-void Switch_Back_to_State_0(){
+/*void Switch_Back_to_State_0(){
   if(GetBtn_Right() == HIGH && GetBtn_Left() == HIGH){
     time_up_two++;
     //Serial.print("Time_up_2Button   =   ");
@@ -93,9 +93,9 @@ void Switch_Back_to_State_0(){
     if(time_up_two > 300){state_menu = 0;}
     time_up_two = 0;
   }
-}
+}*/
 
-void Switch_Set_Preset_Temp(){
+/*void Switch_Set_Preset_Temp(){
   Set_Temp(temper);
   if(state_menu == 3 && GetBtn_Right() == HIGH){
     temper = temper + temp_step;
@@ -173,7 +173,7 @@ void State_Heating(){
     state_heat = 5;
   }
   previous_temper = temper;
-}
+}*/
 
 void Switch_State_Heating(int state_heating){
   switch(state_heating){
