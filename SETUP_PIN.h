@@ -1,17 +1,16 @@
 #ifndef _SETUP_PIN_H_
 #define _SETUP_PIN_H_
 
-int GetTimer_Right_Btn();
-int GetTimer_Left_Btn();
 void Pin_Setup();
 void Setup_PWM_Frequency(int freq_type);
 void Pin_PWM(int state_PWM);
 void Pin_INH(bool state_INH);
-void Read_Btn_Left();
-void Read_Btn_Right();
 void Read_Btn();
+int Get_Btn_val();
+void Check_state_btn(int voltage_on_button);
+int Get_state_btn();
 void Pin_Buzz(bool state_buzz);
 
-int Get_Btn_val();
+
 
 #endif

@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "VibroSens.h"
-#include "BUZZING.h"
+#include "Buzzing.h"
 
 static bool state_vibro_sens = false;
 static const uint8_t ADC1 = A1;

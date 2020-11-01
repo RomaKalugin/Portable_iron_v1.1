@@ -1,4 +1,4 @@
-#include "READ_TEMPER.h"
+#include "Read_Temper.h"
 #include "Arduino.h"
 
 const float a = 0.0000007;
@@ -9,18 +9,7 @@ static uint16_t i = 0;
 static uint16_t i_prev = 0;
 
 
-/*******Temperature variable**********
-static float steinhart;
-#define THERMISTORNOMINAL 470//3900
-#define TEMPERATURENOMINAL 20
-#define NUMSAMPLES 100
-#define BCOEFFICIENT 3453
-#define SERIESRESISTOR 9780   // 10000
-int samples[NUMSAMPLES];
-uint8_t i;
-static float average;
-uint16_t temperature_ntc;
-**************************************/
+static int16_t temperature_ntc = 0;
 
 static uint16_t temperat_K;
 
@@ -66,24 +55,21 @@ int Change_Reading_Temper(int temp_request){
   i = 0;
 }
 
-/*void Read_Temperature_NTC(){
-  temperature_ntc = analogRead(A1);
-  for (i = 0; i < NUMSAMPLES; i++) {
-  samples[i] = temperature_ntc;
-  delay(10);
-  }
-  average = 0;
-  for (i = 0; i < NUMSAMPLES; i++) {
-  average += samples[i];
-  }
-  average /= NUMSAMPLES;
-  average = 1023 / average - 1;
-  average = SERIESRESISTOR / average;
-  steinhart = average / THERMISTORNOMINAL; // (R/Ro)
-  steinhart = log(steinhart); // ln(R/Ro)
-  steinhart /= BCOEFFICIENT; // 1/B * ln(R/Ro)
-  steinhart += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
+void Read_Temperature_ntc(int ADC_val, int temper_nominal, int B_coef, double series_resist, double thermistor_nomin){
+  static double steinhart = 0.0;
+  static float R2 = 0.0;
+  static float logR2 = 0.0;
+  steinhart = 0.0;
+  R2 = series_resist / ((1024.0 / ADC_val) - 1);
+  R2 = R2 / thermistor_nomin;
+  logR2 = log(R2);
+  steinhart = logR2 / B_coef;
+  steinhart += 1.0 / (temper_nominal + 273.15);
   steinhart = 1.0 / steinhart;
   steinhart -= 273.15;
-  //Serial.println(steinhart);
-}*/
+  temperature_ntc = (int)steinhart;
+}
+
+int Get_Temp_ntc(){
+  return temperature_ntc;
+}

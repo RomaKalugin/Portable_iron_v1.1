@@ -1,5 +1,5 @@
 #include "Buzzing.h"
-#include "SETUP_PIN.h"
+#include "Setup_Pin.h"
 #include "Arduino.h"
 
 static unsigned long timing;

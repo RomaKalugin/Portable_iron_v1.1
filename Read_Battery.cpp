@@ -1,23 +1,24 @@
 #include "Read_Battery.h"
 #include "Arduino.h"
 
-const uint8_t read_input_volt = A2;
-static double input_voltage;
+const static uint8_t read_input_volt = A2;
+static uint16_t input_voltage = 0;
 
 void Read_Input_Volt(){
+  static uint8_t i = 0;
   input_voltage = 0;
-  for(uint8_t i = 0; i < 10; i++){
-   input_voltage += analogRead(read_input_volt);
-    }
-    input_voltage = input_voltage / 10;
-    input_voltage = input_voltage * (24 / 1023); 
+  for(i = 0; i < 10; i++){
+  input_voltage += analogRead(read_input_volt);
+  }
+  input_voltage = input_voltage / i;
+  input_voltage = ((input_voltage * 24.3) / 1024) * 1035;
 }
 
-void Check_Input_Voltage(double check_volt){
-  if(check_volt < 10.0){/*Print_min_volt(GetInputVolt());*/}
-  else if(check_volt > 10.0 ){}
+void Check_Input_Voltage(int check_volt){
+  if(check_volt < 10000){/*Print_min_volt(GetInputVolt());*/}
+  else if(check_volt > 10000 ){}
 }
 
-double GetInputVolt(){
+int GetInputVolt(){
   return input_voltage;
 }

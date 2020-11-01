@@ -573,29 +573,12 @@ void Print_min_volt(float voltage){
 
 void Print_BTN_value(int max_val){
   display.clearDisplay();
-  display.setTextSize(2); // Draw 2X-scale text
-  display.setCursor(55, 0);
-  display.cp437(true);         // Use full 256 char 'Code Page 437' font
-  display.write(248);
   display.setTextSize(2); // Draw 3X-scale text
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, 0);
   display.print(max_val, 1);
-  //display.setTextSize(2);
-  //display.setCursor(65, 4);
-  //display.print(F("max"));
   display.display();      // Show initial text
 }
-
-void Print_Buzz(){
-  display.clearDisplay();
-  display.setTextSize(1); // Draw 2X-scale text
-  display.setTextColor(SSD1306_WHITE);
-  display.setCursor(10, 10);  // ___(x, y);
-  display.print(F("Buzz"));
-  display.display();      // Show initial text
-}
-
 
 
 
@@ -642,9 +625,6 @@ void testdrawbitmap(void) {
 
 /*Function: Blinking "press" image*/
 void Standby_LCD() {  
-  current_time = millis();
-  if (current_time - previous_time >= interval_blinking){
-    previous_time = current_time;
     if (state_standby == 0){
       state_standby = 1;
     }
@@ -695,7 +675,6 @@ void Standby_LCD() {
     delay(1);
   }
 */
-}
 
 
 /*Function: Print bitmap logo, press*/

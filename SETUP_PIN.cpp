@@ -1,4 +1,4 @@
-#include "SETUP_PIN.h"
+#include "Setup_Pin.h"
 #include "Arduino.h"
 
 static const uint8_t INH = 3;
@@ -13,6 +13,7 @@ static uint8_t interval_read_button = 20;
 static uint8_t i = 0;
 
 static uint16_t Btn_voltage = 0;
+static uint8_t state_btn = 3;
 
 void Setup_PWM_Frequency(int freq_type){
   switch(freq_type){
@@ -75,7 +76,7 @@ void Pin_INH(bool state_INH){
   }
 }
 
-void Read_Btn_Left(){
+void Read_Btn(){
   Btn_voltage = 0;
   for(i = 0; i < 5; i++){
   Btn_voltage += analogRead(BTN_pin);
@@ -83,24 +84,13 @@ void Read_Btn_Left(){
   }
   Btn_voltage = Btn_voltage / i;
   Btn_voltage = ((Btn_voltage * 4.82) / 1024) * 1035;
+  Check_state_btn(Btn_voltage);
 }
 
 int Get_Btn_val(){
   return Btn_voltage;
 }
 
-void Read_Btn_Right(){
-  //Right_Btn = analogRead(BTN_pin);
-}
-
-void Read_Btn(){
-  current_time = millis();
-  if (current_time - previous_time >= interval_read_button){
-  previous_time = current_time;
-  Read_Btn_Left();
-  //Read_Btn_Right();
-}
-}
 
 void Pin_Buzz(bool state_buzz){
   switch(state_buzz){
@@ -108,4 +98,20 @@ void Pin_Buzz(bool state_buzz){
     case 1: analogWrite(BUZZ, 100); break;
     default: break;
   }
+}
+
+void Check_state_btn(int voltage_on_button){
+  if(voltage_on_button > 2300 && voltage_on_button < 2500){
+    state_btn = 1;
+  }
+  if(voltage_on_button > 3300 && voltage_on_button < 3500){
+    state_btn = 2;
+  }
+  if(voltage_on_button > 3550){
+    state_btn = 3;
+  }
+}
+
+int Get_state_btn(){
+  return state_btn;
 }
