@@ -31,7 +31,8 @@ void Update_PID(){
   for(uint8_t i = 0; i < 5; i++){
   Read_Temperature_Termocouple();
   }
-  error = GetRequestTemp() - GetTemperature();
+  //Set_Temp(100);
+  error = 100 - GetTemperature();
  // Serial.println(GetTemperature());
   err_sum += error;
   deriv = (error - last_error) / (timer - timer_up);

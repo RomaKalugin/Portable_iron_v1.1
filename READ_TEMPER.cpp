@@ -27,18 +27,24 @@ double Get_Temp(){
 }
 
 void Read_Temperature_Termocouple(){
-  for(uint8_t i = 0; i < 5; i++){
-  for(uint8_t i = 0; i < 10; i++){
-  val_ADC0 += analogRead(ADC0);
-  }
-  temperat_K = (val_ADC0 / 10);
-//  Serial.println(temperat_K);
+  uint16_t adc_3 = analogRead(A3);
+  Read_Temperature_ntc(adc_3, 23, 3950, 10000, 4700);
+  //for(uint8_t i = 0; i < 5; i++){
   val_ADC0 = 0;
-  temp += a * (pow(temperat_K,3)) + b * (pow(temperat_K,2)) + c * temperat_K + d;
+  static uint8_t i = 0;
+  for(i = 0; i < 10; i++){
+  val_ADC0 += (((analogRead(ADC0) * 4.84) / 1024) * 180);
+  delay(1);
   }
-  temp = temp / 5;
+  temperat_K = (val_ADC0 / i) + Get_Temp_ntc();
+  //temperat_K = val_ADC0;
+//  Serial.println(temperat_K);
+  //val_ADC0 = 0;
+  //temp += a * (pow(temperat_K,3)) + b * (pow(temperat_K,2)) + c * temperat_K + d;
+  //}
+  //temp = temp / 5;
 
-  temperat_K = (int)temp;
+  //temperat_K = (int)temp;
 }
 
 int Change_Reading_Temper(int temp_request){

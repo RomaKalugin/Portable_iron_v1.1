@@ -6,6 +6,8 @@
 #include "Main_Menu.h"
 #include "PID.h"
 #include "Read_Temper.h"
+#include "Set_Temp.h"
+#include "Buzzing.h"
 
 static unsigned long current_time;
 /*variable for 1 ms task*/
@@ -35,7 +37,7 @@ void Tasks(void){
     }
     if (current_time - previous_time_10ms >= task_10ms){
       previous_time_10ms = current_time;
-      Task_10ms();
+      Task_10ms(Get_state_btn());
     }
     if (current_time - previous_time_15ms >= task_15ms){
       previous_time_15ms = current_time;
@@ -59,7 +61,7 @@ void Task_1ms(){
   
 }
 
-void Task_10ms(){
+void Task_10ms(int state_10ms){
   
 }
 
@@ -71,21 +73,24 @@ Head function:
 Read button and switch menu
 */
 void Task_20ms(){
+  Read_Input_Volt();  //read input voltage (check voltage, when power supply is battery 3S)
   Read_Btn();
-  Main_Menu();
+  //Main_Menu();
 }
 
 void Task_190ms(int state_190ms){
   switch(state_190ms){
-    case 1: Update_PID(); break;
+    case 1: Pin_INH(0); break;
+    case 2: Pin_INH(0); Update_PID(); Pin_PWM(GetOutput()); Read_Temperature_Termocouple(); Pin_INH(1); /*Pin_INH(1); Pin_PWM(GetOutput());*/ break;
   }
 }
 
 void Task_500ms(int state_500ms){
-  Read_Input_Volt();  //read input voltage (check voltage, when power supply is battery 3S)
-  uint16_t adc_3 = analogRead(A3);
+  //uint16_t adc_3 = analogRead(A3);
   switch(state_500ms){
+    case 1: Standby_LCD(); Pin_INH(0); break;
+    case 2: /*Read_Temperature_ntc(adc_3, 23, 3950, 10000, 4700);*//*Standby_LCD();*/ Print_BTN_value(/*Get_Temp_ntc()*/GetTemperature()); break;
     case 3: Print_BTN_value(GetInputVolt()); break;
-    case 1: Read_Temperature_ntc(adc_3, 23, 3950, 10000, 4700);/*Standby_LCD();*/ Print_BTN_value(Get_Temp_ntc());break;
+    case 4: Print_min_volt(GetInputVolt()); Buzzing(); break;
   }
 }

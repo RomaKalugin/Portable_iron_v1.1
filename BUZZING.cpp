@@ -2,16 +2,17 @@
 #include "Setup_Pin.h"
 #include "Arduino.h"
 
-static unsigned long timing;
-static const uint8_t interval_Buzz = 100;
+static uint8_t buzz = 0;
 
 void Buzzing(){
-    timing = millis();
-    if(timing < interval_Buzz){
-      Pin_Buzz(1);
+    if (buzz == 0){
+      buzz = 1;
     }
-    else 
-    {
-      Pin_Buzz(0);  
+    else {
+      buzz = 0;
+    }
+    switch(buzz){
+      case 0: Pin_Buzz(0); break;
+      case 1: Pin_Buzz(1); break;
     }
 }

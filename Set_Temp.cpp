@@ -1,4 +1,5 @@
 #include "Set_Temp.h"
+#include "Read_Temper.h"
 #include "Setup_Pin.h"
 #include "Arduino.h"
 
@@ -8,10 +9,6 @@ static uint8_t step_temp = 5;
 static uint16_t request_temper;
 static uint16_t i = 0;
 static uint16_t i_prev = 0;
-const float a = 0.0000007;
-const float b = -0.001;
-const float c = 1.04;
-const float d = 24.602;
 
 int Get_Request_Temp(){
   return request_temper;
@@ -20,8 +17,11 @@ int Get_Temper_Set(){
   return temper_set;
 }
 
-void Set_Temp(int val_request){
-  temp =a * (pow(val_request, 0.1111)) + b * (pow(val_request, 0.3333)) + c * val_request + d;
+void Set_Temp(int set_value){
+  uint16_t adc_3 = analogRead(A3);
+  Read_Temperature_ntc(adc_3, 23, 3950, 10000, 4700);
+  temp = 0.0;
+  temp = (((set_value - Get_Temp_ntc()) / 240.0) * 1024.0) / 4.84;
   temper_set = (int)temp;
 }
 

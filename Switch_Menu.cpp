@@ -32,8 +32,8 @@ void State_Heating(){
 void Switch_State_Heating(int state_heating){
   switch(state_heating){
     case 0: break;
-    case 1: Pin_INH(0); /*delay(10);*/ Update_PID(); Pin_INH(1); break;
-    case 2: Set_Temp(/*temper*/0); Request_Temper(); /*Temperature = GetTemperature(); RequestTemperature = Get_Temper_Set();*/ Print_Temp(); break;
+    case 1:  break; // Pin_INH(0); /*delay(10);*/ Update_PID(); Pin_INH(1);
+    case 2: break; //Set_Temp(/*temper*/0); Request_Temper(); /*Temperature = GetTemperature(); RequestTemperature = Get_Temper_Set();*/ Print_Temp(); 
     case 3: /*state_menu = 2;*/ Pin_INH(0); break;
     case 4: //temper = 200; break;
     case 5: //temper = previous_temper; break;

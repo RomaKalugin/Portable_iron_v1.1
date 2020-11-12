@@ -1,5 +1,6 @@
 #include "Setup_Pin.h"
 #include "Arduino.h"
+#include "Read_Battery.h"
 
 static const uint8_t INH = 3;
 static const uint8_t PWM_OUT = 9;
@@ -84,7 +85,7 @@ void Read_Btn(){
   }
   Btn_voltage = Btn_voltage / i;
   Btn_voltage = ((Btn_voltage * 4.82) / 1024) * 1035;
-  Check_state_btn(Btn_voltage);
+  Check_state_btn(Btn_voltage, GetInputVolt());
 }
 
 int Get_Btn_val(){
@@ -95,21 +96,27 @@ int Get_Btn_val(){
 void Pin_Buzz(bool state_buzz){
   switch(state_buzz){
     case 0: analogWrite(BUZZ, 0); break;
-    case 1: analogWrite(BUZZ, 100); break;
+    case 1: analogWrite(BUZZ, 10); break; // when use pwm value more 10LSB need use series current resistor on speaker 100R? (+5V-speaker-transistor-gnd)
     default: break;
   }
 }
 
-void Check_state_btn(int voltage_on_button){
+void Check_state_btn(int voltage_on_button, int input_voltage){
   if(voltage_on_button > 2300 && voltage_on_button < 2500){
     state_btn = 1;
   }
-  if(voltage_on_button > 3300 && voltage_on_button < 3500){
+  if(voltage_on_button > 3300 && voltage_on_button < 3600){
     state_btn = 2;
   }
-  if(voltage_on_button > 3550){
+  if(voltage_on_button > 3650){
     state_btn = 3;
   }
+  //if(input_voltage < 9000){
+  //  state_btn = 4;
+  //}
+  //else if(input_voltage >= 9000){ //checking input voltage(use 3S battery)
+  //  state_btn = 3;
+  //}
 }
 
 int Get_state_btn(){
