@@ -3,12 +3,11 @@
 #include "LCD_print.h"
 #include "Arduino.h"
 #include "Set_Temp.h"
-#include "Main_Menu.h"
 #include "Switch_Menu.h"
 
-static float Kp = 16.85;
-static float Ki = 0.0095;
-static float Kd = 9.85;
+static float Kp = 35.0;
+static float Ki = 1.0;
+static float Kd = 0.0;
 
 static float deriv;
 
@@ -21,18 +20,18 @@ static unsigned long timer_up;
 
 static int16_t output;
  
-static float windup = 0.092;
+static float windup = 0.0;
 static float sat_diff;
-static int16_t satur_low = 10;
-static int16_t satur_high = 1020;
+static int16_t satur_low = 0;
+static int16_t satur_high = 1023;
 
 void Update_PID(){
   timer = millis();
-  for(uint8_t i = 0; i < 5; i++){
-  Read_Temperature_Termocouple();
-  }
+  //for(uint8_t i = 0; i < 5; i++){
+  //Read_Temperature_Termocouple();
+  //}
   //Set_Temp(100);
-  error = 100 - GetTemperature();
+  error = Get_request_temp() - GetTemperature();
  // Serial.println(GetTemperature());
   err_sum += error;
   deriv = (error - last_error) / (timer - timer_up);

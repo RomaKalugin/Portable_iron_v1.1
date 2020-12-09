@@ -571,12 +571,16 @@ void Print_min_volt(float voltage){
 }
 /*****************************************************************/
 
-void Print_BTN_value(int max_val){
+void Print_BTN_value(int max_val, int min_val){
   display.clearDisplay();
   display.setTextSize(2); // Draw 3X-scale text
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, 0);
   display.print(max_val, 1);
+  display.setTextSize(1); // Draw 3X-scale text
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 16);
+  display.print(min_val, 1);
   display.display();      // Show initial text
 }
 

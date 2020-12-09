@@ -1,13 +1,10 @@
 #ifndef _Switch_Menu_
 #define _Switch_Menu_
 
-void Switch_Main_Menu();
-void Switch_Back_to_State_0();
-void Switch_Set_Preset_Temp();
-void Switch_Heating_Set_Temp();
-void State_Heating();
-void Switch_State_Heating(int state_heating);
-int GetState_Menu();
-int GetRequestTemp();
+void Check_state_stndby_btn(int voltage_on_button, int input_voltage);
+void Check_state_heat_btn(int voltage_on_button, int input_voltage);
+int Get_state_btn();
+int Get_request_temp();
+
 
 #endif

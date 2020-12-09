@@ -31,12 +31,13 @@ void Read_Temperature_Termocouple(){
   Read_Temperature_ntc(adc_3, 23, 3950, 10000, 4700);
   //for(uint8_t i = 0; i < 5; i++){
   val_ADC0 = 0;
-  static uint8_t i = 0;
-  for(i = 0; i < 10; i++){
-  val_ADC0 += (((analogRead(ADC0) * 4.84) / 1024) * 180);
+  static uint8_t i = 0; 
+  for(i = 0; i < 20; i++){
+  val_ADC0 += analogRead(ADC0);
   delay(1);
   }
-  temperat_K = (val_ADC0 / i) + Get_Temp_ntc();
+  val_ADC0 = (((val_ADC0 / i) * 4.84) / 1024) * 175;
+  temperat_K = val_ADC0 + Get_Temp_ntc();
   //temperat_K = val_ADC0;
 //  Serial.println(temperat_K);
   //val_ADC0 = 0;

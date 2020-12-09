@@ -18,6 +18,6 @@ void Print_Max(int max_val);
 void Print_min_volt(float voltage);
 
 
-void Print_BTN_value(int max_val);
+void Print_BTN_value(int max_val, int min_val);
 
 #endif

@@ -3,7 +3,7 @@
 #include "Read_Battery.h"
 #include "Setup_Pin.h"
 #include "LCD_print.h"
-#include "Main_Menu.h"
+#include "Switch_Menu.h"
 #include "PID.h"
 #include "Read_Temper.h"
 #include "Set_Temp.h"
@@ -22,9 +22,9 @@ static const uint8_t task_15ms = 15;
 /*variable for 20 ms task*/
 static unsigned long previous_time_20ms = 0;
 static const uint8_t task_20ms = 20;
-/*variable for 190 ms task*/
-static unsigned long previous_time_190ms = 0;
-static const uint8_t task_190ms = 190;
+/*variable for 100 ms task*/
+static unsigned long previous_time_100ms = 0;
+static const uint8_t task_100ms = 100;
 /*variable for 500 ms task*/
 static unsigned long previous_time_500ms = 0;
 static const uint16_t task_500ms = 500;
@@ -47,9 +47,9 @@ void Tasks(void){
       previous_time_20ms = current_time;
       Task_20ms();
     }
-    if (current_time - previous_time_190ms >= task_190ms){
-      previous_time_190ms = current_time;
-      Task_190ms(Get_state_btn());
+    if (current_time - previous_time_100ms >= task_100ms){
+      previous_time_100ms = current_time;
+      Task_100ms(Get_state_btn());
     }
     if (current_time - previous_time_500ms >= task_500ms){
       previous_time_500ms = current_time;
@@ -78,10 +78,11 @@ void Task_20ms(){
   //Main_Menu();
 }
 
-void Task_190ms(int state_190ms){
-  switch(state_190ms){
+static uint16_t tmp_thermocouple;
+void Task_100ms(int state_100ms){
+  switch(state_100ms){
     case 1: Pin_INH(0); break;
-    case 2: Pin_INH(0); Update_PID(); Pin_PWM(GetOutput()); Read_Temperature_Termocouple(); Pin_INH(1); /*Pin_INH(1); Pin_PWM(GetOutput());*/ break;
+    case 2: Pin_INH(0); Check_state_heat_btn(Get_Btn_val(), 0); delay(50); Read_Temperature_Termocouple(); Pin_INH(1); Update_PID();  Pin_PWM(GetOutput()); break;
   }
 }
 
@@ -89,8 +90,8 @@ void Task_500ms(int state_500ms){
   //uint16_t adc_3 = analogRead(A3);
   switch(state_500ms){
     case 1: Standby_LCD(); Pin_INH(0); break;
-    case 2: /*Read_Temperature_ntc(adc_3, 23, 3950, 10000, 4700);*//*Standby_LCD();*/ Print_BTN_value(/*Get_Temp_ntc()*/GetTemperature()); break;
-    case 3: Print_BTN_value(GetInputVolt()); break;
-    case 4: Print_min_volt(GetInputVolt()); Buzzing(); break;
+    case 2: /*tmp_thermocouple = Change_Reading_Temper(GetTemperature());*/ Print_BTN_value(/*Get_Temp_ntc()*/GetTemperature(), Get_request_temp()); /*Read_Temperature_ntc(adc_3, 23, 3950, 10000, 4700);*//*Standby_LCD();*/  break;
+    case 3: Print_BTN_value(GetInputVolt(), 0); Pin_INH(0); break;
+    case 4: Print_min_volt(GetInputVolt()); Buzzing(); Pin_INH(0); break;
   }
 }

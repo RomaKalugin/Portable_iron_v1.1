@@ -7,46 +7,55 @@
 #include "Vibrosens.h"
 #include "Arduino.h"
 
+static uint8_t state_btn = 3;
+static uint16_t start_tmp = 250;
+static uint16_t tmp_up = 5;
+static uint16_t tmp_dwn = 5;
 
-
-void Switch_Main_Menu(){
-  
-}
-
-void Switch_Back_to_State_0(){
-  
-}
-
-void Switch_Set_Preset_Temp(){
-  
-}
-
-void Switch_Heating_Set_Temp(){
-  
-}
-
-void State_Heating(){
-  
-}
-
-void Switch_State_Heating(int state_heating){
-  switch(state_heating){
-    case 0: break;
-    case 1:  break; // Pin_INH(0); /*delay(10);*/ Update_PID(); Pin_INH(1);
-    case 2: break; //Set_Temp(/*temper*/0); Request_Temper(); /*Temperature = GetTemperature(); RequestTemperature = Get_Temper_Set();*/ Print_Temp(); 
-    case 3: /*state_menu = 2;*/ Pin_INH(0); break;
-    case 4: //temper = 200; break;
-    case 5: //temper = previous_temper; break;
-    case 6: break;
-    default: break;  
+void Check_state_stndby_btn(int voltage_on_button, int input_voltage){
+  if(state_btn == 3){
+  if(voltage_on_button > 2300 && voltage_on_button < 2500){
+    state_btn = 1;
+  }
+  else if(voltage_on_button > 3300 && voltage_on_button < 3600){
+    state_btn = 2;
+  }
+  else if(voltage_on_button > 3650){
+    state_btn = 3;
+  }
   }
 }
 
-
-int GetState_Menu(){
+void Check_state_heat_btn(int voltage_on_button, int input_voltage){
+  //do{
+  //Print_text_size1(Get_request_temp());
+  //}while(0);
   
+  if(state_btn == 2){
+    if(voltage_on_button > 3300 && voltage_on_button < 3600){
+      //delay(100);
+      start_tmp = start_tmp + tmp_up;
+    }
+    else if(voltage_on_button > 2300 && voltage_on_button < 2500){
+      //delay(100);
+      start_tmp = start_tmp - tmp_dwn;
+    }
+    else if(voltage_on_button > 3650){
+      state_btn = 3;
+    }
+  }
+  //if(input_voltage < 9000){
+  //  state_btn = 4;
+  //}
+  //else if(input_voltage >= 9000){ //checking input voltage(use 3S battery)
+  //  state_btn = 3;
+  //}
 }
 
-int GetRequestTemp(){
-  
+int Get_state_btn(){
+  return state_btn;
+}
+
+int Get_request_temp(){
+  return start_tmp;
 }
