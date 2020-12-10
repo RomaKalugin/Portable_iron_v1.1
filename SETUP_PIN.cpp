@@ -80,9 +80,9 @@ void Pin_INH(bool state_INH){
 
 void Read_Btn(){
   Btn_voltage = 0;
-  for(i = 0; i < 5; i++){
+  for(i = 0; i < 10; i++){
   Btn_voltage += analogRead(BTN_pin);
-  delayMicroseconds(500);
+  //delayMicroseconds(500);
   }
   Btn_voltage = Btn_voltage / i;
   Btn_voltage = ((Btn_voltage * 4.82) / 1024) * 1035;

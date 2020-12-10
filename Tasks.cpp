@@ -37,7 +37,7 @@ void Tasks(void){
     }
     if (current_time - previous_time_10ms >= task_10ms){
       previous_time_10ms = current_time;
-      Task_10ms(Get_state_btn());
+      Task_10ms();
     }
     if (current_time - previous_time_15ms >= task_15ms){
       previous_time_15ms = current_time;
@@ -61,7 +61,7 @@ void Task_1ms(){
   
 }
 
-void Task_10ms(int state_10ms){
+void Task_10ms(){
   
 }
 
@@ -78,11 +78,11 @@ void Task_20ms(){
   //Main_Menu();
 }
 
-static uint16_t tmp_thermocouple;
+//static uint16_t tmp_thermocouple;
 void Task_100ms(int state_100ms){
   switch(state_100ms){
-    case 1: Pin_INH(0); break;
-    case 2: Pin_INH(0); Check_state_heat_btn(Get_Btn_val(), 0); delay(50); Read_Temperature_Termocouple(); Pin_INH(1); Update_PID();  Pin_PWM(GetOutput()); break;
+    case 1: break;
+    case 2: Pin_INH(0); Check_state_heat_btn(Get_Btn_val(), 0); delay(11); Read_Temperature_Termocouple(); Pin_INH(1); Update_PID(); Pin_PWM(GetOutput()); break;
   }
 }
 

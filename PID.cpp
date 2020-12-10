@@ -6,7 +6,7 @@
 #include "Switch_Menu.h"
 
 static float Kp = 35.0;
-static float Ki = 1.0;
+static float Ki = 0.018;
 static float Kd = 0.0;
 
 static float deriv;
@@ -20,7 +20,7 @@ static unsigned long timer_up;
 
 static int16_t output;
  
-static float windup = 0.0;
+static float windup = 0.0000095;
 static float sat_diff;
 static int16_t satur_low = 0;
 static int16_t satur_high = 1023;

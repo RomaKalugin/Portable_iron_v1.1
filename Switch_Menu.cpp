@@ -7,30 +7,40 @@
 #include "Vibrosens.h"
 #include "Arduino.h"
 
-static uint8_t state_btn = 3;
+static uint8_t state_btn = 1;
 static uint16_t start_tmp = 250;
 static uint16_t tmp_up = 5;
 static uint16_t tmp_dwn = 5;
 
+/*******************************************/
+static uint16_t counter_button = 0;
+const static uint16_t counter_heat_state = 100;
+const static uint16_t counter_stndby_state = 10;
+/*******************************************/
+
 void Check_state_stndby_btn(int voltage_on_button, int input_voltage){
-  if(state_btn == 3){
+  if(state_btn == 1){
   if(voltage_on_button > 2300 && voltage_on_button < 2500){
     state_btn = 1;
   }
   else if(voltage_on_button > 3300 && voltage_on_button < 3600){
-    state_btn = 2;
+    counter_button++;
+    if(counter_button >= counter_heat_state){
+      state_btn = 2;
+      counter_button = 0;
+    }
   }
   else if(voltage_on_button > 3650){
-    state_btn = 3;
+    counter_button++;
+    if(counter_button >= counter_stndby_state){
+      state_btn = 1;
+      counter_button = 0;
+    }
   }
   }
 }
 
 void Check_state_heat_btn(int voltage_on_button, int input_voltage){
-  //do{
-  //Print_text_size1(Get_request_temp());
-  //}while(0);
-  
   if(state_btn == 2){
     if(voltage_on_button > 3300 && voltage_on_button < 3600){
       //delay(100);
@@ -41,7 +51,11 @@ void Check_state_heat_btn(int voltage_on_button, int input_voltage){
       start_tmp = start_tmp - tmp_dwn;
     }
     else if(voltage_on_button > 3650){
-      state_btn = 3;
+      counter_button++;
+    if(counter_button >= counter_stndby_state){
+      state_btn = 1;
+      counter_button = 0;
+    }
     }
   }
   //if(input_voltage < 9000){

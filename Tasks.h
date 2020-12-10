@@ -3,7 +3,7 @@
 
 void Tasks(void);
 void Task_1ms();
-void Task_10ms(int state_10ms);
+void Task_10ms();
 void Task_15ms();
 void Task_20ms();
 void Task_100ms(int state_100ms);

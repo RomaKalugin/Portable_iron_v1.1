@@ -11,7 +11,7 @@ void Read_Input_Volt(){
   input_voltage = 0;
   for(i = 0; i < 20; i++){
   input_voltage += analogRead(read_input_volt);
-  delay(2);
+  //delay(2);
   }
   input_voltage = input_voltage / i;
   input_voltage = ((input_voltage * 24.3) / 1024) * 1058;

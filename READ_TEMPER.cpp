@@ -32,7 +32,7 @@ void Read_Temperature_Termocouple(){
   //for(uint8_t i = 0; i < 5; i++){
   val_ADC0 = 0;
   static uint8_t i = 0; 
-  for(i = 0; i < 20; i++){
+  for(i = 0; i < 30; i++){
   val_ADC0 += analogRead(ADC0);
   delay(1);
   }
