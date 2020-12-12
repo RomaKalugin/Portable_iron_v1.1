@@ -534,20 +534,23 @@ void Print_Cooling(){
 /*********************************************************************************/
 
 /*Function: Print read temperature, when temperature stabilized*/
-void Print_Heat(){
+void Print_Heat(int temperature_value, int request_temperature_value){
   l++;
   if(l == 128){l = 114;}
   display.clearDisplay();
-  display.setCursor(65, 4);
+  display.setCursor(38, 2);
   display.setTextSize(2); // Draw 2X-scale text
   display.cp437(true);         // Use full 256 char 'Code Page 437' font
   display.write(248);
-  display.setTextSize(3); // Draw 2X-scale text
+  display.setTextSize(2); // Draw 2X-scale text
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(10, 4);
-  display.print(Change_Temper(Get_Temp()), 1);
-  display.setCursor(80, 4);
+  display.setCursor(2, 2);
+  display.print(temperature_value, 1);
+  display.setCursor(52, 2);
   display.print(F("C"));
+  display.setTextSize(1); // Draw 2X-scale text
+  display.setCursor(2, 20);
+  display.print(request_temperature_value, 1);
   display.drawBitmap(l, 0, heat, 16, 5, 1);
   display.drawBitmap(l, 6, heat, 16, 5, 1);
   display.drawBitmap(l, 12, heat, 16, 5, 1);
@@ -560,13 +563,13 @@ void Print_Heat(){
 /*****************Function: Warning voltage***********************/
 void Print_min_volt(float voltage){
   display.clearDisplay();
-  display.setCursor(10, 10);
+  display.setCursor(2, 10);
   display.setTextSize(1); // Draw 2X-scale text
-  display.cp437(true);
+  //display.cp437(true);
   display.setTextColor(SSD1306_WHITE);
-  display.print(F("Voltage low"));
+  display.print(F("Voltage low "));
   display.print(voltage, 1);
-  display.print(F(" v"));
+  display.print(F("mV"));
   display.display();      // Show initial text
 }
 /*****************************************************************/
@@ -581,6 +584,32 @@ void Print_BTN_value(int max_val, int min_val){
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, 16);
   display.print(min_val, 1);
+  display.display();      // Show initial text
+}
+
+void Print_sleep(int value){
+  display.clearDisplay();
+  display.setTextSize(2); // Draw 2X-scale text
+  display.cp437(true);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(2, 2);
+  display.print(value, 1);
+  display.setCursor(38, 2);
+  display.write(248);
+  display.setCursor(52, 2);
+  display.print(F("C"));
+  display.setTextSize(1); // Draw 2X-scale text
+  display.setCursor(80, 5);
+  display.print(F("SLEEP "));
+  display.display();      // Show initial text
+}
+
+void Print_value(int value){
+  display.clearDisplay();
+  display.setTextSize(1); // Draw 2X-scale text
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(80, 2);
+  display.print(value, 1);
   display.display();      // Show initial text
 }
 

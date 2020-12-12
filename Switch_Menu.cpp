@@ -40,7 +40,7 @@ void Check_state_stndby_btn(int voltage_on_button, int input_voltage){
   }
 }
 
-void Check_state_heat_btn(int voltage_on_button, int input_voltage){
+void Check_state_heat_btn(int voltage_on_button, int input_voltage, int vibro_sens_state){
   if(state_btn == 2){
     if(voltage_on_button > 3300 && voltage_on_button < 3600){
       //delay(100);
@@ -52,12 +52,18 @@ void Check_state_heat_btn(int voltage_on_button, int input_voltage){
     }
     else if(voltage_on_button > 3650){
       counter_button++;
-    if(counter_button >= counter_stndby_state){
-      state_btn = 1;
-      counter_button = 0;
+      if(counter_button >= counter_stndby_state){
+        state_btn = 1;
+        counter_button = 0;
+      }
     }
+    if(vibro_sens_state == 0){
+      state_btn = 5;
     }
   }
+  if(vibro_sens_state == 1){
+      state_btn = 2;
+    }
   //if(input_voltage < 9000){
   //  state_btn = 4;
   //}
