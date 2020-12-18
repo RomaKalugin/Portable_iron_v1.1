@@ -19,7 +19,12 @@ void Print_min_volt(float voltage);
 
 
 void Print_BTN_value(int max_val, int min_val);
+
 void Print_sleep(int value);
+void Print_Type_Battery(int type);
+void Print_Buzzing(bool state);
+
+
 void Print_value(int value);
 
 #endif

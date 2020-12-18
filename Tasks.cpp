@@ -6,7 +6,6 @@
 #include "Switch_Menu.h"
 #include "PID.h"
 #include "Read_Temper.h"
-#include "Set_Temp.h"
 #include "Buzzing.h"
 #include "VibroSens.h"
 
@@ -46,7 +45,7 @@ void Tasks(void){
     }
     if (current_time - previous_time_20ms >= task_20ms){
       previous_time_20ms = current_time;
-      Task_20ms();
+      Task_20ms(Get_state_btn());
     }
     if (current_time - previous_time_100ms >= task_100ms){
       previous_time_100ms = current_time;
@@ -73,31 +72,40 @@ void Task_15ms(){
 Head function: 
 Read button and switch menu
 */
-void Task_20ms(){
+void Task_20ms(int state_20ms){
   Read_Btn();
-  //Main_Menu();
+  switch(state_20ms){
+    case 1: Check_state_stndby_btn(Get_Btn_val()); break;
+    case 2: break;
+    case 3: break;
+    case 4: break;
+    case 5: Check_state_heat_btn(Get_Btn_val(), GetVibroState()); break;
+    case 6: Check_battery_state_btn(Get_Btn_val()); break;
+  }
 }
 
 //static uint16_t tmp_thermocouple;
 void Task_100ms(int state_100ms){
   switch(state_100ms){
     case 1: break;
-    case 2: Pin_INH(0); Check_state_heat_btn(Get_Btn_val(), 0, GetVibroState()); delay(11); Read_Temperature_Termocouple(); Pin_INH(1); Update_PID(); Pin_PWM(GetOutput()); break;
+    case 2: Pin_INH(0); Check_state_heat_btn(Get_Btn_val(), GetVibroState()); delay(11); Read_Temperature_Termocouple(); Pin_INH(1); Update_PID(); Pin_PWM(GetOutput()); break;
     case 3: break;
     case 4: break;
-    case 5: Check_state_heat_btn(Get_Btn_val(), 0, GetVibroState()); break;
+    case 5: break;
+    case 6: break;
   }
 }
 
 void Task_500ms(int state_500ms){
-  //uint16_t adc_3 = analogRead(A3);
-  //Print_value(GetVibroState());
   Tracking_vibro();
+  Read_Input_Volt(); /*read input voltage (check voltage, when power supply is battery 3S/4S/5S/24V)*/
   switch(state_500ms){
-    case 1: Pin_INH(0); Read_Input_Volt(); /*read input voltage (check voltage, when power supply is battery 3S)*/ break;
-    case 2: Print_Heat(GetTemperature(), Get_request_temp()); /*Print_BTN_value(/*Get_Temp_ntc()*/ /*GetTemperature(), Get_request_temp());*/ /*Read_Temperature_ntc(adc_3, 23, 3950, 10000, 4700);*//*Standby_LCD();*/  break;
-    case 3: Print_BTN_value(GetInputVolt(), 0); Pin_INH(0); break;
-    case 4: Print_min_volt(GetInputVolt()); Buzzing(); Pin_INH(0); break;
-    case 5: Pin_INH(0); Read_Temperature_Termocouple(); Print_sleep(GetTemperature()); break;
+    case 1: Pin_INH(0); Standby_LCD(); break;
+    case 2: Print_Heat(GetTemperature(), Get_request_temp());   break;
+    case 3: break;
+    case 4: break;
+    case 5: Pin_INH(0); delay(9); Check_state_heat_btn(Get_Btn_val(), GetVibroState()); Read_Temperature_Termocouple(); Print_sleep(GetTemperature()); break;
+    case 6: Pin_INH(0); Print_Type_Battery(Get_type_battery()); break;
+    case 7: Pin_INH(0); Print_Buzzing(1); break;
   }
 }

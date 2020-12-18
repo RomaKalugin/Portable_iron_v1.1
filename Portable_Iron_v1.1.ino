@@ -5,7 +5,6 @@
 #include "Buzzing.h"
 #include "PID.h"
 #include "LCD_print.h"
-#include "Set_Temp.h"
 #include "Switch_Menu.h"
 //#include "EEPROM_Read_Write.h"
 
@@ -13,7 +12,7 @@
 void setup() {
   Serial.begin(115200);    
   Print_Version_Iron(2); //0 - 180* degrees(righthand), 2 - 0* degree(lefthand);
-  delay(1000);
+  delay(2000);
   Clear_Display();
   Pin_Setup();
   Setup_PWM_Frequency(0); //0 - 15kHz(default), 1 - 60Hz(default), 2 - 5Hz

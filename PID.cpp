@@ -2,7 +2,6 @@
 #include "Read_Temper.h"
 #include "LCD_print.h"
 #include "Arduino.h"
-#include "Set_Temp.h"
 #include "Switch_Menu.h"
 
 static float Kp = 35.0;
@@ -27,10 +26,6 @@ static int16_t satur_high = 1023;
 
 void Update_PID(){
   timer = millis();
-  //for(uint8_t i = 0; i < 5; i++){
-  //Read_Temperature_Termocouple();
-  //}
-  //Set_Temp(100);
   error = Get_request_temp() - GetTemperature();
  // Serial.println(GetTemperature());
   err_sum += error;

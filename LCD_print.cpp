@@ -1,6 +1,5 @@
 #include "LCD_print.h"
 #include "Read_Temper.h"
-#include "Set_Temp.h"
 #include "Switch_Menu.h"
 #include "Arduino.h"
 #include <Wire.h>
@@ -14,14 +13,8 @@
 #define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-const float iron_version = 1.00;
+static const float iron_version = 1.10;
 
-static unsigned long timer_scroll;
-static unsigned long previous_timer_scroll = 0;
-
-static unsigned long current_time;
-static unsigned long previous_time = 0;
-const uint16_t interval_blinking = 500;
 static uint8_t state_standby = 0; 
 
 static const unsigned char PROGMEM unpress_logo[] =
@@ -427,7 +420,7 @@ void Print_Temp(){
   display.setTextSize(3); // Draw 2X-scale text
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(10, 4);
-  display.print(Change_Temper(Get_Temp()), 1);
+  //display.print(Change_Temper(Get_Temp()), 1);
   display.drawBitmap(105, 4, iron, 8, 26, 1);
   display.setCursor(80, 4);
   display.print(F("C"));
@@ -521,7 +514,7 @@ void Print_Cooling(){
   display.setTextSize(3); // Draw 2X-scale text
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(10, 4);
-  display.print(Change_Temper(Get_Temp()), 1);
+  //display.print(Change_Temper(Get_Temp()), 1);
   display.setCursor(80, 4);
   display.print(F("C"));
   display.drawBitmap(105, 4, iron, 8, 26, 1);
@@ -603,6 +596,35 @@ void Print_sleep(int value){
   display.print(F("SLEEP "));
   display.display();      // Show initial text
 }
+/*************************************************************************/
+
+void Print_Type_Battery(int type){
+  display.clearDisplay();
+  display.setCursor(6, 5);
+  display.setTextSize(1); // Draw 1X-scale text
+  display.print(F("Type battery"));
+  display.setTextSize(2); // Draw 2X-scale text
+  display.setCursor(85, 2);
+  display.print(type);
+  display.setCursor(98, 2);
+  display.print(F("S"));
+  display.setTextColor(SSD1306_WHITE);
+  display.display();      // Show initial text
+}
+/*************************************************************************/
+
+void Print_Buzzing(bool state){
+  display.clearDisplay();
+  display.setCursor(2, 2);
+  display.setTextSize(2); // Draw 1X-scale text
+  display.print(F("Buzzing"));
+  display.setTextSize(2); // Draw 2X-scale text
+  display.setCursor(2, 16);
+  display.print(state);
+  display.setTextColor(SSD1306_WHITE);
+  display.display();      // Show initial text
+}
+/*************************************************************************/
 
 void Print_value(int value){
   display.clearDisplay();

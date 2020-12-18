@@ -5,12 +5,8 @@
 
 static const uint8_t INH = 3;
 static const uint8_t PWM_OUT = 9;
-//static const uint8_t LEFT_BTN = 4;
 static const uint8_t BTN_pin = A7;
 static const uint8_t BUZZ = 5;
-static unsigned long current_time;
-static unsigned long previous_time = 0;
-static uint8_t interval_read_button = 20;
 
 static uint8_t i = 0;
 
@@ -86,7 +82,6 @@ void Read_Btn(){
   }
   Btn_voltage = Btn_voltage / i;
   Btn_voltage = ((Btn_voltage * 4.82) / 1024) * 1035;
-  Check_state_stndby_btn(Btn_voltage, GetInputVolt());
 }
 
 int Get_Btn_val(){

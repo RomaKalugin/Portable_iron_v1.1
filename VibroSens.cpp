@@ -2,7 +2,9 @@
 #include "VibroSens.h"
 #include "Buzzing.h"
 
-static bool state_vibro_sens = 0;
+static bool state_vibro_sens = 1;
+static uint8_t state_vibro_current = 0;
+static uint8_t vibro_state_previous = 0;
 static const uint8_t ADC1 = A1;
 static uint16_t ADC1_val;
 static uint16_t filtered_val;
@@ -19,17 +21,29 @@ void Tracking_vibro(){
   filtered_val = ADC1_val / num_read;
   
   if(filtered_val > 150){
-    state_vibro_sens = true;
-    timer = 0;
+    state_vibro_current = 1;
   }
   else if(filtered_val < 150){
+    state_vibro_current = 0;
+  }
+  Check_vibro_state();
+}
+
+void Check_vibro_state(){
+  if(state_vibro_current - vibro_state_previous == 0){
+    vibro_state_previous = state_vibro_current;
     timer++;
-    if(timer > 6){
-    state_vibro_sens = false;
-    timer = 0;
+    if(timer >= 100){
+      state_vibro_sens = 0;
+      timer = 0;
     }
   }
+  if(state_vibro_current - vibro_state_previous != 0){
+    vibro_state_previous = state_vibro_current;
+    state_vibro_sens = 1;
+  }
 }
+
 
 bool GetVibroState(){
   return state_vibro_sens;
