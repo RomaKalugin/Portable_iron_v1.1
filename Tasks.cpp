@@ -75,12 +75,15 @@ Read button and switch menu
 void Task_20ms(int state_20ms){
   Read_Btn();
   switch(state_20ms){
-    case 1: Check_state_stndby_btn(Get_Btn_val()); break;
+    case 1: Check_state_stndby_btn(Get_Btn_val(), GetInputVolt(), Get_type_battery()); break;
     case 2: break;
-    case 3: break;
+    case 3: Check_state_stndby_btn(Get_Btn_val(), GetInputVolt(), Get_type_battery()); break;
     case 4: break;
     case 5: Check_state_heat_btn(Get_Btn_val(), GetVibroState()); break;
     case 6: Check_battery_state_btn(Get_Btn_val()); break;
+    case 7: break;
+    case 8: Check_sleep_state_btn(Get_Btn_val()); break;
+    default: break;
   }
 }
 
@@ -88,24 +91,26 @@ void Task_20ms(int state_20ms){
 void Task_100ms(int state_100ms){
   switch(state_100ms){
     case 1: break;
-    case 2: Pin_INH(0); Check_state_heat_btn(Get_Btn_val(), GetVibroState()); delay(11); Read_Temperature_Termocouple(); Pin_INH(1); Update_PID(); Pin_PWM(GetOutput()); break;
+    case 2: Pin_INH(0); Check_state_heat_btn(Get_Btn_val(), GetVibroState()); delay(15); Read_Temperature_Termocouple(); Pin_INH(1); Update_PID(); Pin_PWM(GetOutput()); break;
     case 3: break;
     case 4: break;
-    case 5: break;
+    case 5: Pin_INH(0); delay(15); Read_Temperature_Termocouple(); Pin_INH(1); Update_PID(); Pin_PWM(GetOutput()); break;
     case 6: break;
+    default: break;
   }
 }
 
 void Task_500ms(int state_500ms){
-  Tracking_vibro();
   Read_Input_Volt(); /*read input voltage (check voltage, when power supply is battery 3S/4S/5S/24V)*/
   switch(state_500ms){
     case 1: Pin_INH(0); Standby_LCD(); break;
-    case 2: Print_Heat(GetTemperature(), Get_request_temp());   break;
-    case 3: break;
-    case 4: break;
-    case 5: Pin_INH(0); delay(9); Check_state_heat_btn(Get_Btn_val(), GetVibroState()); Read_Temperature_Termocouple(); Print_sleep(GetTemperature()); break;
+    case 2: Check_Input_Voltage(GetInputVolt(), Get_type_battery()); Tracking_vibro(); Print_Heat(GetTemperature(), Get_request_temp()); break;
+    case 3: Pin_INH(0); Buzzing(); Print_min_volt(GetInputVolt()); break;
+    case 4: Pin_INH(0); Print_Start_Temp(250); break;
+    case 5: Pin_INH(0); /*delay(9); Read_Temperature_Termocouple();*/ Print_sleep(GetTemperature()); break;
     case 6: Pin_INH(0); Print_Type_Battery(Get_type_battery()); break;
     case 7: Pin_INH(0); Print_Buzzing(1); break;
+    case 8: Pin_INH(0); Print_Time_sleep(Get_time_sleep()); break;
+    default: break;
   }
 }

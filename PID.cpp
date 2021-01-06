@@ -4,8 +4,8 @@
 #include "Arduino.h"
 #include "Switch_Menu.h"
 
-static float Kp = 35.0;
-static float Ki = 0.018;
+static float Kp = 40.0;
+static float Ki = 0.055;
 static float Kd = 0.0;
 
 static float deriv;

@@ -92,7 +92,7 @@ int Get_Btn_val(){
 void Pin_Buzz(bool state_buzz){
   switch(state_buzz){
     case 0: analogWrite(BUZZ, 0); break;
-    case 1: analogWrite(BUZZ, 10); break; // when use pwm value more 10LSB need use series current resistor on speaker 100R? (+5V-speaker-transistor-gnd)
+    case 1: analogWrite(BUZZ, 5); break; // when use pwm value more 10LSB need use series current resistor on speaker 100R? (+5V-speaker-transistor-gnd)
     default: break;
   }
 }

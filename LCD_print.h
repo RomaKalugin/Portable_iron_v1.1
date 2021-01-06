@@ -4,7 +4,7 @@
 void Print_Version_Iron(int set_rotation);
 void Print_Temp();
 void Standby_LCD();
-void Print_Request_Temp(int print_val);
+void Print_Start_Temp(int print_val);
 void Clear_Display();
 void Standby_press_lcd();
 void Standby_unpress_lcd();
@@ -22,6 +22,7 @@ void Print_BTN_value(int max_val, int min_val);
 
 void Print_sleep(int value);
 void Print_Type_Battery(int type);
+void Print_Time_sleep(int time_sleep);
 void Print_Buzzing(bool state);
 
 

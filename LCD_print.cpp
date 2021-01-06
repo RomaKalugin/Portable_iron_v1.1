@@ -431,16 +431,17 @@ void Print_Temp(){
 /*Function: Print char "degree" , uses "Code Page 437",
   Input parameter: print_val,
   Print parameter: print_val*/
-void Print_Request_Temp(int print_val){
+void Print_Start_Temp(int print_val){
   display.clearDisplay();
-  display.setTextSize(2); // Draw 2X-scale text
-  display.setCursor(55, 0);
+  display.setTextSize(1); // Draw 2X-scale text
+  display.setCursor(2, 2);
+  display.print(F("Temperature at start"));
   display.cp437(true);         // Use full 256 char 'Code Page 437' font
-  display.write(248);
-  display.setTextSize(3); // Draw 3X-scale text
+  display.setTextSize(2); // Draw 3X-scale text
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, 0);
   display.print(print_val, 1);
+  display.write(248);
   display.display();      // Show initial text
 }
 /************************************************************************************************************/
@@ -532,7 +533,7 @@ void Print_Heat(int temperature_value, int request_temperature_value){
   if(l == 128){l = 114;}
   display.clearDisplay();
   display.setCursor(38, 2);
-  display.setTextSize(2); // Draw 2X-scale text
+  display.setTextSize(1); // Draw 2X-scale text
   display.cp437(true);         // Use full 256 char 'Code Page 437' font
   display.write(248);
   display.setTextSize(2); // Draw 2X-scale text
@@ -588,10 +589,14 @@ void Print_sleep(int value){
   display.setCursor(2, 2);
   display.print(value, 1);
   display.setCursor(38, 2);
+  display.setTextSize(1); // Draw 2X-scale text
   display.write(248);
+  display.setTextSize(2); // Draw 2X-scale text
   display.setCursor(52, 2);
   display.print(F("C"));
   display.setTextSize(1); // Draw 2X-scale text
+  display.setCursor(2, 20);
+  display.print(F("200"));
   display.setCursor(80, 5);
   display.print(F("SLEEP "));
   display.display();      // Show initial text
@@ -599,15 +604,45 @@ void Print_sleep(int value){
 /*************************************************************************/
 
 void Print_Type_Battery(int type){
+  if(type < 6){
+    display.clearDisplay();
+    display.setCursor(6, 5);
+    display.setTextSize(1); // Draw 1X-scale text
+    display.print(F("Type battery"));
+    display.setTextSize(2); // Draw 2X-scale text
+    display.setCursor(85, 2);
+    display.print(type);
+    display.setCursor(98, 2);
+    display.print(F("S"));
+    display.setTextColor(SSD1306_WHITE);
+    display.display();      // Show initial text
+  }
+  else if(type > 19){
+    display.clearDisplay();
+    display.setCursor(6, 5);
+    display.setTextSize(1); // Draw 1X-scale text
+    display.print(F("Type battery"));
+    display.setTextSize(2); // Draw 2X-scale text
+    display.setCursor(85, 2);
+    display.print(type);
+    display.setCursor(110, 2);
+    display.print(F("V"));
+    display.setTextColor(SSD1306_WHITE);
+    display.display();      // Show initial text
+  }
+}
+/*************************************************************************/
+
+void Print_Time_sleep(int time_sleep){
   display.clearDisplay();
-  display.setCursor(6, 5);
+  display.setCursor(15, 0);
   display.setTextSize(1); // Draw 1X-scale text
-  display.print(F("Type battery"));
+  display.print(F("Time sleep"));
   display.setTextSize(2); // Draw 2X-scale text
-  display.setCursor(85, 2);
-  display.print(type);
-  display.setCursor(98, 2);
-  display.print(F("S"));
+  display.setCursor(10, 11);
+  display.print(time_sleep);
+  display.setCursor(35, 11);
+  display.print(F("min"));
   display.setTextColor(SSD1306_WHITE);
   display.display();      // Show initial text
 }
