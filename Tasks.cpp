@@ -107,7 +107,7 @@ void Task_500ms(int state_500ms){
     case 2: Check_Input_Voltage(GetInputVolt(), Get_type_battery()); Tracking_vibro(); Print_Heat(GetTemperature(), Get_request_temp()); break;
     case 3: Pin_INH(0); Buzzing(); Print_min_volt(GetInputVolt()); break;
     case 4: Pin_INH(0); Print_Start_Temp(250); break;
-    case 5: Pin_INH(0); /*delay(9); Read_Temperature_Termocouple();*/ Print_sleep(GetTemperature()); break;
+    case 5: Pin_INH(0); Tracking_vibro(); Print_sleep(GetTemperature()); break;
     case 6: Pin_INH(0); Print_Type_Battery(Get_type_battery()); break;
     case 7: Pin_INH(0); Print_Buzzing(1); break;
     case 8: Pin_INH(0); Print_Time_sleep(Get_time_sleep()); break;
